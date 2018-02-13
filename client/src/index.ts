@@ -5,9 +5,6 @@ import { Vector } from '../../shared/utils/vector';
 let app = document.querySelector('#app');
 
 var socket = io('localhost:3001');
-socket.on('message', function(data: any) {
-    console.log(data);
-});
 
 var movement = {
     up: false,
@@ -41,6 +38,7 @@ document.addEventListener('keydown', function(event) {
             break;
     }
 });
+
 document.addEventListener('keyup', function(event) {
     switch (event.keyCode) {
         case 65: // A
@@ -66,11 +64,8 @@ const ctx = (<any>canvas).getContext('2d');
 let idleTimeStamp = 0;
 
 const draw = (players: Array<SerializedPlayer>, i: number) => {
-    if (i === idleTimeStamp) {
-        return;
-    }
+    if (i === idleTimeStamp) return;
     idleTimeStamp = i;
-    console.log('drawing', i);
     ctx.clearRect(0, 0, 800, 600);
     players.forEach((player: SerializedPlayer) => {
         const { pos: { x, y }, color } = player;
